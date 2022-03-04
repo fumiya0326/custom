@@ -15,6 +15,8 @@
 		A0E5F64627D23E8E00B3A43B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F64427D23E8E00B3A43B /* LaunchScreen.storyboard */; };
 		A0E5F65127D23E8F00B3A43B /* custom_appTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F65027D23E8F00B3A43B /* custom_appTests.swift */; };
 		A0E5F65C27D23E8F00B3A43B /* custom_appUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F65B27D23E8F00B3A43B /* custom_appUITests.swift */; };
+		A0E5F66B27D25A0A00B3A43B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */; };
+		A0E5F66E27D25BCB00B3A43B /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		A0E5F65727D23E8F00B3A43B /* custom-appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "custom-appUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E5F65B27D23E8F00B3A43B /* custom_appUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = custom_appUITests.swift; sourceTree = "<group>"; };
 		A0E5F65D27D23E8F00B3A43B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0E5F66A27D25A0A00B3A43B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +103,9 @@
 		A0E5F63827D23E8C00B3A43B /* custom-app */ = {
 			isa = PBXGroup;
 			children = (
+				A0E5F66C27D25BB600B3A43B /* DataBase */,
 				A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */,
+				A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */,
 				A0E5F63B27D23E8C00B3A43B /* SceneDelegate.swift */,
 				A0E5F63D27D23E8C00B3A43B /* ViewController.swift */,
 				A0E5F63F27D23E8C00B3A43B /* Main.storyboard */,
@@ -126,6 +132,14 @@
 				A0E5F65D27D23E8F00B3A43B /* Info.plist */,
 			);
 			path = "custom-appUITests";
+			sourceTree = "<group>";
+		};
+		A0E5F66C27D25BB600B3A43B /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */,
+			);
+			path = DataBase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +272,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0E5F66E27D25BCB00B3A43B /* DatabaseController.swift in Sources */,
 				A0E5F63E27D23E8C00B3A43B /* ViewController.swift in Sources */,
 				A0E5F63A27D23E8C00B3A43B /* AppDelegate.swift in Sources */,
 				A0E5F63C27D23E8C00B3A43B /* SceneDelegate.swift in Sources */,
+				A0E5F66B27D25A0A00B3A43B /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +603,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A0E5F66A27D25A0A00B3A43B /* Model.xcdatamodel */,
+			);
+			currentVersion = A0E5F66A27D25A0A00B3A43B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A0E5F62E27D23E8C00B3A43B /* Project object */;
 }
