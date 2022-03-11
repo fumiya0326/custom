@@ -12,4 +12,7 @@ class HabitationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dueTimeLabel: UILabel!
     
     @IBOutlet weak var titleLable: UILabel!
+    
+    @IBOutlet weak var deleteButton: UIButton!
+    
 }
