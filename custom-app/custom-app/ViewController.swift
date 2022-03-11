@@ -50,6 +50,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let itemPerHeight: CGFloat = 4
     
     
+    @IBAction func onTapAddButton(_ sender: Any) {
+        
+        let storyBoard: UIStoryboard = self.storyboard!
+        let nextView = storyboard!.instantiateViewController(withIdentifier: "formView")
+        self.present(nextView, animated: true, completion: nil)
+    }
     /**
      編集状態を管理
      @params editing 編集状態
