@@ -202,6 +202,20 @@
                                 <rect key="frame" x="340" y="60" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4V-hC-YKI">
+                                <rect key="frame" x="344" y="295" width="30" height="30"/>
+                                <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="onTappedEditButton:" destination="Ybe-jR-i2N" eventType="touchUpInside" id="uzA-OD-x2W"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yan-se-zyS">
+                                <rect key="frame" x="36" y="68" width="20" height="22"/>
+                                <state key="normal" image="arrow.backward" catalog="system"/>
+                                <connections>
+                                    <action selector="onTappedExitButton:" destination="Ybe-jR-i2N" eventType="touchUpInside" id="EuB-xa-l0Z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ish-Hx-XlN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -213,9 +227,13 @@
                             <constraint firstItem="UfQ-aZ-7x0" firstAttribute="centerX" secondItem="Qir-ij-EhX" secondAttribute="centerX" id="BoB-fA-26C"/>
                             <constraint firstItem="ish-Hx-XlN" firstAttribute="bottom" secondItem="mOI-fc-nez" secondAttribute="bottom" id="HNM-ea-80r"/>
                             <constraint firstItem="Q9v-os-lYG" firstAttribute="bottom" secondItem="UfQ-aZ-7x0" secondAttribute="bottom" id="OF8-qf-hzR"/>
+                            <constraint firstItem="UfQ-aZ-7x0" firstAttribute="bottom" secondItem="yan-se-zyS" secondAttribute="bottom" id="OcF-PM-nUO"/>
+                            <constraint firstItem="L4V-hC-YKI" firstAttribute="bottom" secondItem="c08-SH-CXt" secondAttribute="bottom" id="PCA-Zr-TWI"/>
                             <constraint firstItem="TJw-7f-ll5" firstAttribute="leading" secondItem="ish-Hx-XlN" secondAttribute="leading" constant="36" id="QdF-6K-XHd"/>
+                            <constraint firstItem="TJw-7f-ll5" firstAttribute="leading" secondItem="yan-se-zyS" secondAttribute="leading" id="dZt-0o-iuB"/>
                             <constraint firstItem="Q9v-os-lYG" firstAttribute="trailing" secondItem="bdn-yY-7eS" secondAttribute="trailing" id="fmb-kn-r50"/>
                             <constraint firstItem="UfQ-aZ-7x0" firstAttribute="top" secondItem="ish-Hx-XlN" secondAttribute="top" constant="25" id="l9e-yy-GD8"/>
+                            <constraint firstItem="L4V-hC-YKI" firstAttribute="trailing" secondItem="Q9v-os-lYG" secondAttribute="trailing" id="mXG-S3-GEZ"/>
                             <constraint firstItem="c08-SH-CXt" firstAttribute="centerX" secondItem="Qir-ij-EhX" secondAttribute="centerX" id="mqJ-mu-SSk"/>
                             <constraint firstItem="mOI-fc-nez" firstAttribute="top" secondItem="c08-SH-CXt" secondAttribute="bottom" constant="20" id="nK0-de-Ea4"/>
                             <constraint firstItem="mOI-fc-nez" firstAttribute="leading" secondItem="ish-Hx-XlN" secondAttribute="leading" id="ov0-c8-X0f"/>
@@ -224,6 +242,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="editButton" destination="L4V-hC-YKI" id="0sZ-j7-5Ru"/>
                         <outlet property="overlayView" destination="L2h-NX-MDn" id="3fS-H5-UXb"/>
                         <outlet property="tableView" destination="mOI-fc-nez" id="fBQ-bH-V4J"/>
                     </connections>
@@ -244,7 +263,11 @@
                                         <action selector="onTappedtakePicture:" destination="Ybe-jR-i2N" id="ZkD-q3-5NZ"/>
                                     </connections>
                                 </barButtonItem>
-                                <barButtonItem title="finish" id="van-ML-e2g"/>
+                                <barButtonItem title="finish" id="van-ML-e2g">
+                                    <connections>
+                                        <action selector="onTappedFininshButton:" destination="Ybe-jR-i2N" id="n85-cG-2Fu"/>
+                                    </connections>
+                                </barButtonItem>
                             </items>
                         </toolbar>
                     </subviews>
@@ -256,6 +279,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="circle.circle.fill" catalog="system" width="128" height="121"/>

@@ -53,6 +53,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBAction func onTapAddButton(_ sender: Any) {
         let storyBoard: UIStoryboard = self.storyboard!
         let nextView = storyBoard.instantiateViewController(withIdentifier: "formView")
+        nextView.modalPresentationStyle = .fullScreen
         self.present(nextView, animated: true, completion: nil)
     }
     

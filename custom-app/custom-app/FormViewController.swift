@@ -12,11 +12,18 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var editButton: UIButton!
+    
+    // セルの高さ
+    let cellHeight: CGFloat = 100
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.isEditing = true
     }
     
     @IBOutlet var overlayView: UIView!
@@ -51,6 +58,25 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         imagePicker.takePicture()
     }
     
+    @IBAction func onTappedFininshButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func onTappedEditButton(_ sender: UIButton) {
+        tableView.isEditing = !tableView.isEditing
+        if(tableView.isEditing) {
+            sender.setTitle("Done", for: .normal)
+            print("DONE")
+        }else {
+            sender.setTitle("Edit", for: .normal)
+            print("Edit")
+        }
+    }
+    
+    @IBAction func onTappedExitButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: UIImagePickerControllerDelegate
     
     /**
@@ -66,11 +92,11 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         // 撮影した画像を追加する
         images.append(image)
-
+        
         // 表示の更新のためテーブルビューを更新する
         self.tableView.reloadData()
     }
-
+    
     // MARK: UITableViewDelegateMethod
     
     /**
@@ -91,13 +117,7 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
      @param in テーブルビュー
      */
     func numberOfSections(in tableView: UITableView) -> Int {
-        if(images.count > 1) {
-            return 1
-        }else {
-            // もしも画像がない場合はセクションを表示しない
-            return 0
-        }
-        
+        return 1
     }
     
     /**
@@ -115,6 +135,58 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
      @param heightForRowAt セルの位置
      */
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return images[indexPath.row].size.height/10
+        return cellHeight
+    }
+    
+    /**
+     編集可能状態
+     @param tableView テーブルビュー
+     @param canEditRowAt セルの位置
+     */
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // テーブルビューの編集状態を許可
+        return true
+    }
+    
+    /**
+     セルの編集
+     @param tableView テーブルビュー
+     @param commit 編集スタイル
+     @param forRowAt セルの位置
+     */
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        images.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+        
+    }
+    
+    /**
+     セルの移動可否
+     @param tableView テーブルビュー
+     @param canMoveRowAt 移動可能なセルの位置
+     */
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    /**
+     セルの移動を管理
+     @param tableView テーブルビュー
+     @param sourceIndexPath 移動前のセルの位置
+     @param destinationIndexPath 移動先のセルの位置
+     */
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let image = images[sourceIndexPath.row]
+        images.remove(at: sourceIndexPath.row)
+        images.insert(image, at: destinationIndexPath.row)
+    }
+    
+    /**
+     セルの編集スタイルを設定
+     @param tableView テーブルビュー
+     @param editingStyleForRowAt 編集スタイル
+     */
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
     }
 }
