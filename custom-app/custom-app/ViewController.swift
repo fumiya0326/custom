@@ -14,7 +14,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         // デリゲートの設定
         habitationCollectionView.delegate = self
         // データソースの設定
@@ -51,11 +51,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     @IBAction func onTapAddButton(_ sender: Any) {
-        
         let storyBoard: UIStoryboard = self.storyboard!
-        let nextView = storyboard!.instantiateViewController(withIdentifier: "formView")
+        let nextView = storyBoard.instantiateViewController(withIdentifier: "formView")
         self.present(nextView, animated: true, completion: nil)
     }
+    
     /**
      編集状態を管理
      @params editing 編集状態
@@ -135,9 +135,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
      @paarms didSelectItemAt 選択されたアイテムのインデックス
      */
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("didselect")
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "habitationCell", for: indexPath) as! HabitationCollectionViewCell
-
     }
     
     
