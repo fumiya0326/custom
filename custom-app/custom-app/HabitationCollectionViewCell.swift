@@ -12,7 +12,13 @@ class HabitationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dueTimeLabel: UILabel!
     
     @IBOutlet weak var titleLable: UILabel!
+        
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
     
-    @IBOutlet weak var deleteButton: UIButton!
-    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        self.layer.cornerRadius = 10
+    }
 }
