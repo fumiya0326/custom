@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import opencv2
 
 class FormViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,
                           UITableViewDelegate, UITableViewDataSource{
@@ -13,7 +14,6 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var editButton: UIButton!
-    
     // セルの高さ
     let cellHeight: CGFloat = 100
     
@@ -22,7 +22,7 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         // Do any additional setup after loading the view.
         tableView.delegate = self
         tableView.dataSource = self
-        
+        let mat = Mat()
         tableView.isEditing = true
     }
     

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0AA0EFB27DE173900EEACDA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AA0EFA27DE173100EEACDA /* libc++.tbd */; };
+		A0AA0EFD27DE174600EEACDA /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AA0EFC27DE174600EEACDA /* opencv2.framework */; };
 		A0C5329327DB7FA600242428 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329227DB7FA600242428 /* FormViewController.swift */; };
 		A0C5329727DC87A700242428 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329627DC87A700242428 /* ImageTableViewCell.swift */; };
 		A0E5F63A27D23E8C00B3A43B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A0AA0EFA27DE173100EEACDA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		A0AA0EFC27DE174600EEACDA /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		A0C5329227DB7FA600242428 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		A0C5329627DC87A700242428 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		A0E5F63627D23E8C00B3A43B /* custom-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "custom-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AA0EFD27DE174600EEACDA /* opencv2.framework in Frameworks */,
+				A0AA0EFB27DE173900EEACDA /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0AA0EF927DE173100EEACDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0AA0EFC27DE174600EEACDA /* opencv2.framework */,
+				A0AA0EFA27DE173100EEACDA /* libc++.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A0E5F62D27D23E8C00B3A43B = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +110,7 @@
 				A0E5F64F27D23E8F00B3A43B /* custom-appTests */,
 				A0E5F65A27D23E8F00B3A43B /* custom-appUITests */,
 				A0E5F63727D23E8C00B3A43B /* Products */,
+				A0AA0EF927DE173100EEACDA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -470,6 +486,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92HTFDBH8Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "custom-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -489,6 +509,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92HTFDBH8Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "custom-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
