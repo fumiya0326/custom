@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import opencv2
 
 class FormViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,
                           UITableViewDelegate, UITableViewDataSource{
@@ -15,7 +16,7 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var editButton: UIButton!
     
     // セルの高さ
-    let cellHeight: CGFloat = 100
+    let cellHeight: CGFloat = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,7 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.isEditing = true
+        tableView.isEditing = false
     }
     
     @IBOutlet var overlayView: UIView!
@@ -65,11 +66,9 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBAction func onTappedEditButton(_ sender: UIButton) {
         tableView.isEditing = !tableView.isEditing
         if(tableView.isEditing) {
-            sender.setTitle("Done", for: .normal)
-            print("DONE")
+            sender.setTitle("DONE", for: .normal)
         }else {
-            sender.setTitle("Edit", for: .normal)
-            print("Edit")
+            sender.setTitle("EDIT", for: .normal)
         }
     }
     
@@ -90,8 +89,17 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             fatalError()
         }
         
+        let rotatedImage = ImageProcessor.rotate(image: image)
+        
+        let cannyImage = ImageProcessor.canny(image: rotatedImage)
+            
+        let binarizedImage = ImageProcessor.binarize(image: rotatedImage)
+        
+        let cornours = ImageProcessor.findContours(image: binarizedImage, source: rotatedImage)
         // 撮影した画像を追加する
-        images.append(image)
+        images.append(cannyImage)
+        images.append(cornours)
+        images.append(binarizedImage)
         
         // 表示の更新のためテーブルビューを更新する
         self.tableView.reloadData()
