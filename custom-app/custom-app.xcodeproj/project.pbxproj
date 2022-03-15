@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0AA0F0227DF5FD200EEACDA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AA0F0127DF5FCC00EEACDA /* libc++.tbd */; };
+		A0AA0F0427DF5FDA00EEACDA /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AA0F0327DF5FDA00EEACDA /* opencv2.framework */; };
+		A0AA0F0827DF610600EEACDA /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F0727DF610600EEACDA /* ImageProcessor.swift */; };
 		A0C5329327DB7FA600242428 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329227DB7FA600242428 /* FormViewController.swift */; };
 		A0C5329727DC87A700242428 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329627DC87A700242428 /* ImageTableViewCell.swift */; };
 		A0E5F63A27D23E8C00B3A43B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */; };
@@ -41,6 +44,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A0AA0F0127DF5FCC00EEACDA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		A0AA0F0327DF5FDA00EEACDA /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		A0AA0F0727DF610600EEACDA /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		A0C5329227DB7FA600242428 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		A0C5329627DC87A700242428 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		A0E5F63627D23E8C00B3A43B /* custom-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "custom-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AA0F0427DF5FDA00EEACDA /* opencv2.framework in Frameworks */,
+				A0AA0F0227DF5FD200EEACDA /* libc++.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +96,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A0AA0F0027DF5FCC00EEACDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A0AA0F0327DF5FDA00EEACDA /* opencv2.framework */,
+				A0AA0F0127DF5FCC00EEACDA /* libc++.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A0E5F62D27D23E8C00B3A43B = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +112,7 @@
 				A0E5F64F27D23E8F00B3A43B /* custom-appTests */,
 				A0E5F65A27D23E8F00B3A43B /* custom-appUITests */,
 				A0E5F63727D23E8C00B3A43B /* Products */,
+				A0AA0F0027DF5FCC00EEACDA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,6 +133,7 @@
 				A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */,
 				A0C5329627DC87A700242428 /* ImageTableViewCell.swift */,
 				A0C5329227DB7FA600242428 /* FormViewController.swift */,
+				A0AA0F0727DF610600EEACDA /* ImageProcessor.swift */,
 				A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */,
 				A0E5F63B27D23E8C00B3A43B /* SceneDelegate.swift */,
 				A0E5F63D27D23E8C00B3A43B /* ViewController.swift */,
@@ -286,6 +305,7 @@
 			files = (
 				A0E5F67027D320AC00B3A43B /* HabitationTableViewController.swift in Sources */,
 				A0E5F67227D3292D00B3A43B /* HabitationCollectionViewCell.swift in Sources */,
+				A0AA0F0827DF610600EEACDA /* ImageProcessor.swift in Sources */,
 				A0E5F66E27D25BCB00B3A43B /* DatabaseController.swift in Sources */,
 				A0E5F63E27D23E8C00B3A43B /* ViewController.swift in Sources */,
 				A0E5F63A27D23E8C00B3A43B /* AppDelegate.swift in Sources */,
@@ -470,11 +490,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92HTFDBH8Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "custom-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.fumiya.custom-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -489,11 +514,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 92HTFDBH8Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "custom-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.fumiya.custom-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
