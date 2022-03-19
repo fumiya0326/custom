@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -154,7 +155,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bdn-yY-7eS">
                                 <rect key="frame" x="36" y="216" width="338" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="入力" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UfQ-aZ-7x0">
                                 <rect key="frame" x="189.5" y="69" width="35" height="21"/>
@@ -213,8 +214,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yan-se-zyS">
-                                <rect key="frame" x="36" y="68" width="20" height="22"/>
-                                <state key="normal" image="arrow.backward" catalog="system"/>
+                                <rect key="frame" x="36" y="56" width="30" height="34"/>
+                                <state key="normal" title="Exit">
+                                    <color key="titleColor" name="AccentColor"/>
+                                </state>
                                 <connections>
                                     <action selector="onTappedExitButton:" destination="Ybe-jR-i2N" eventType="touchUpInside" id="EuB-xa-l0Z"/>
                                 </connections>
@@ -222,6 +225,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ish-Hx-XlN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="c08-SH-CXt" firstAttribute="top" secondItem="bdn-yY-7eS" secondAttribute="bottom" constant="53" id="4hp-7Y-G0Y"/>
                             <constraint firstItem="ish-Hx-XlN" firstAttribute="trailing" secondItem="mOI-fc-nez" secondAttribute="trailing" id="7YQ-5Y-nNC"/>
@@ -243,11 +247,15 @@
                             <constraint firstItem="TJw-7f-ll5" firstAttribute="top" secondItem="ish-Hx-XlN" secondAttribute="top" constant="120" id="uTs-pE-DVU"/>
                             <constraint firstItem="ish-Hx-XlN" firstAttribute="trailing" secondItem="bdn-yY-7eS" secondAttribute="trailing" constant="40" id="yX0-lJ-dR6"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="6QQ-JC-9gb" appends="YES" id="veB-p3-FkQ"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="editButton" destination="L4V-hC-YKI" id="0sZ-j7-5Ru"/>
                         <outlet property="overlayView" destination="L2h-NX-MDn" id="3fS-H5-UXb"/>
                         <outlet property="tableView" destination="mOI-fc-nez" id="fBQ-bH-V4J"/>
+                        <outlet property="textField" destination="bdn-yY-7eS" id="5HI-4F-h72"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMa-ds-KaX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -277,15 +285,22 @@
                     <viewLayoutGuide key="safeArea" id="dS9-c3-xv3"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
+                <tapGestureRecognizer id="6QQ-JC-9gb">
+                    <connections>
+                        <action selector="tapGestureRecognizer:" destination="Ybe-jR-i2N" id="irK-hD-bHO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="560.86956521739137" y="-63.616071428571423"/>
+            <point key="canvasLocation" x="432" y="-2"/>
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="circle.circle.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

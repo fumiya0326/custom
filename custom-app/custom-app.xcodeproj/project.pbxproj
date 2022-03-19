@@ -10,6 +10,9 @@
 		A0AA0F0227DF5FD200EEACDA /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AA0F0127DF5FCC00EEACDA /* libc++.tbd */; };
 		A0AA0F0427DF5FDA00EEACDA /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0AA0F0327DF5FDA00EEACDA /* opencv2.framework */; };
 		A0AA0F0827DF610600EEACDA /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F0727DF610600EEACDA /* ImageProcessor.swift */; };
+		A0AA0F0E27E5B7B700EEACDA /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F0C27E5B7B700EEACDA /* DataModel.xcdatamodeld */; };
+		A0AA0F1027E5B92200EEACDA /* NoteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F0F27E5B92200EEACDA /* NoteEntity.swift */; };
+		A0AA0F1227E5B9C400EEACDA /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F1127E5B9C400EEACDA /* Entity.swift */; };
 		A0C5329327DB7FA600242428 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329227DB7FA600242428 /* FormViewController.swift */; };
 		A0C5329727DC87A700242428 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329627DC87A700242428 /* ImageTableViewCell.swift */; };
 		A0E5F63A27D23E8C00B3A43B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */; };
@@ -47,6 +50,9 @@
 		A0AA0F0127DF5FCC00EEACDA /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		A0AA0F0327DF5FDA00EEACDA /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		A0AA0F0727DF610600EEACDA /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
+		A0AA0F0D27E5B7B700EEACDA /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		A0AA0F0F27E5B92200EEACDA /* NoteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEntity.swift; sourceTree = "<group>"; };
+		A0AA0F1127E5B9C400EEACDA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		A0C5329227DB7FA600242428 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		A0C5329627DC87A700242428 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		A0E5F63627D23E8C00B3A43B /* custom-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "custom-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +139,7 @@
 				A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */,
 				A0C5329627DC87A700242428 /* ImageTableViewCell.swift */,
 				A0C5329227DB7FA600242428 /* FormViewController.swift */,
+				A0AA0F0C27E5B7B700EEACDA /* DataModel.xcdatamodeld */,
 				A0AA0F0727DF610600EEACDA /* ImageProcessor.swift */,
 				A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */,
 				A0E5F63B27D23E8C00B3A43B /* SceneDelegate.swift */,
@@ -169,6 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */,
+				A0AA0F0F27E5B92200EEACDA /* NoteEntity.swift */,
+				A0AA0F1127E5B9C400EEACDA /* Entity.swift */,
 			);
 			path = DataBase;
 			sourceTree = "<group>";
@@ -303,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AA0F0E27E5B7B700EEACDA /* DataModel.xcdatamodeld in Sources */,
 				A0E5F67027D320AC00B3A43B /* HabitationTableViewController.swift in Sources */,
 				A0E5F67227D3292D00B3A43B /* HabitationCollectionViewCell.swift in Sources */,
 				A0AA0F0827DF610600EEACDA /* ImageProcessor.swift in Sources */,
@@ -312,6 +322,8 @@
 				A0C5329727DC87A700242428 /* ImageTableViewCell.swift in Sources */,
 				A0E5F63C27D23E8C00B3A43B /* SceneDelegate.swift in Sources */,
 				A0C5329327DB7FA600242428 /* FormViewController.swift in Sources */,
+				A0AA0F1227E5B9C400EEACDA /* Entity.swift in Sources */,
+				A0AA0F1027E5B92200EEACDA /* NoteEntity.swift in Sources */,
 				A0E5F66B27D25A0A00B3A43B /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -653,6 +665,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		A0AA0F0C27E5B7B700EEACDA /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A0AA0F0D27E5B7B700EEACDA /* DataModel.xcdatamodel */,
+			);
+			currentVersion = A0AA0F0D27E5B7B700EEACDA /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
