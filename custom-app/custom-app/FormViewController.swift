@@ -7,6 +7,7 @@
 
 import UIKit
 import opencv2
+import PDFKit
 
 class FormViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,
                           UITableViewDelegate, UITableViewDataSource{
@@ -51,7 +52,6 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     // 撮影画像一覧
     var images: [UIImage] = []
     
-    
     /**
      撮影ボタンタップ時
      */
@@ -76,6 +76,29 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func onTappedSaveButton(_ sender: Any) {
+        let pdfDocument: PDFDocument = PDFDocument()
+        var index = 0
+        images.forEach({ image in
+            guard let page = PDFPage(image: image) else {
+                fatalError()
+            }
+            pdfDocument.insert(page, at: index)
+            index += 1
+        })
+        
+        //TODO: DBへ保存する
+        
+        //TODO: 保存ボタンを押したときに表示はしないようにする？
+        // 少なくともaddSubViewではない
+        let pdfView: PDFView = PDFView(frame: self.view.bounds)
+        pdfView.document = pdfDocument
+        pdfView.autoScales = true
+        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(pdfView)
+        
+    }
     // MARK: UIImagePickerControllerDelegate
     
     /**
