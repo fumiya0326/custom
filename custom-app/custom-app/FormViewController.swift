@@ -9,23 +9,29 @@ import UIKit
 import opencv2
 import PDFKit
 
-class FormViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,
-                          UITableViewDelegate, UITableViewDataSource{
+class FormViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var editButton: UIButton!
     
+    @IBOutlet weak var textField: UITextField!
+    
     // セルの高さ
     let cellHeight: CGFloat = 300
     
+    // ノートのタイトル
+    var noteTitle: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.isEditing = false
+        
+        textField.delegate = self
     }
     
     @IBOutlet var overlayView: UIView!
@@ -33,10 +39,17 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let imagePicker = UIImagePickerController()
     
     /**
+     画面タップ時
+     */
+    @IBAction func tapGestureRecognizer(_ sender: Any) {
+        noteTitle = textField.text
+        textField.resignFirstResponder()
+    }
+    
+    /**
      カメラボタンタップ時
      */
     @IBAction func onTappedCameraButton(_ sender: Any) {
-        print("onTappedCamera")
         if(UIImagePickerController.isSourceTypeAvailable(.camera)) {
             imagePicker.sourceType = .camera
             imagePicker.delegate = self
@@ -59,10 +72,16 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         imagePicker.takePicture()
     }
     
+    /**
+     カメラの撮影終了ボタンタップ時
+     */
     @IBAction func onTappedFininshButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    /**
+     編集ボタンタップ時
+     */
     @IBAction func onTappedEditButton(_ sender: UIButton) {
         tableView.isEditing = !tableView.isEditing
         if(tableView.isEditing) {
@@ -72,12 +91,20 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
     }
     
+    /**
+     終了ボタンタップ時
+     */
     @IBAction func onTappedExitButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    /**
+     保存ボタンタップ時
+     */
     @IBAction func onTappedSaveButton(_ sender: Any) {
+        
         let pdfDocument: PDFDocument = PDFDocument()
+        
         var index = 0
         images.forEach({ image in
             guard let page = PDFPage(image: image) else {
@@ -87,7 +114,18 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             index += 1
         })
         
-        //TODO: DBへ保存する
+        guard let title = noteTitle else {
+            fatalError()
+        }
+        
+        // ノートのエンティティ
+        let noteEntity = NoteEntity(title: title, pdfDocumentData: pdfDocument.dataRepresentation()!)
+        
+        // ノートの保存
+        noteEntity.insert()
+        
+        // 画面を閉じる
+        self.dismiss(animated: true, completion: nil)
         
         //TODO: 保存ボタンを押したときに表示はしないようにする？
         // 少なくともaddSubViewではない
@@ -99,7 +137,11 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.view.addSubview(pdfView)
         
     }
-    // MARK: UIImagePickerControllerDelegate
+}
+
+// MARK: UIImagePickerControllerDelegate
+
+extension FormViewController: UIImagePickerControllerDelegate {
     
     /**
      撮影完了時のimage
@@ -115,7 +157,7 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let rotatedImage = ImageProcessor.rotate(image: image)
         
         let cannyImage = ImageProcessor.canny(image: rotatedImage)
-            
+        
         let binarizedImage = ImageProcessor.binarize(image: rotatedImage)
         
         let cornours = ImageProcessor.cutByContours(from: binarizedImage, source: rotatedImage)
@@ -127,8 +169,11 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         // 表示の更新のためテーブルビューを更新する
         self.tableView.reloadData()
     }
-    
-    // MARK: UITableViewDelegateMethod
+}
+
+// MARK: UITableViewDelegateMethod
+
+extension FormViewController: UITableViewDelegate, UITableViewDataSource {
     
     /**
      セル設定のdelegateメソッド
@@ -219,5 +264,13 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
      */
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
+    }
+}
+
+extension FormViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        noteTitle = textField.text
+        textField.resignFirstResponder()
+        return true
     }
 }

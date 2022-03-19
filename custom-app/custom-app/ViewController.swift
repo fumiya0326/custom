@@ -7,14 +7,14 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+class ViewController: UIViewController {
+    
     /**
      ビュー描画終了時
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // デリゲートの設定
         habitationCollectionView.delegate = self
         // データソースの設定
@@ -38,7 +38,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         // 複数選択を可能に
         self.habitationCollectionView.allowsMultipleSelection = true
         
+        // DBからデータ取得
+        Notes = NoteEntity.fetchAll()
+        
     }
+    
+    /**
+     ビュー表示時
+     */
+    override func viewWillAppear(_ animated: Bool) {
+        // DBから更新する
+        Notes = NoteEntity.fetchAll()
+        habitationCollectionView.reloadData()
+    }
+    
+    // ノート
+    var Notes: [NoteEntity] = []
     
     // 両サイドのマージン
     let sideMargin: CGFloat = 25
@@ -99,14 +114,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     
     @IBOutlet weak var habitationCollectionView: UICollectionView!
-    
-    // TODO: DB用意する
-    // 仮のデータ
-    var TODO: [String] = ["a", "b", "c"]
-    
-    
-    // MARK: UICollectionViewDelegate
+}
 
+// MARK: UICollectionViewDelegate
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     /**
      セルの設定を行うcollectionviewのdelegateメソッド
      @params collectionView コレクションビュー
@@ -116,7 +129,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "habitationCell", for: indexPath) as! HabitationCollectionViewCell
         cell.dueTimeLabel.text = "6:00"
-        cell.titleLable.text = TODO[indexPath.row]
+        cell.titleLable.text = Notes[indexPath.row].title
         return cell
     }
     
@@ -127,7 +140,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
      @returns アイテム数
      */
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return TODO.count
+        return Notes.count
     }
     
     /**
@@ -172,15 +185,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
      @paarms moveItemAt  移動するアイテムのインデックス
      */
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let tmpTODO = TODO.remove(at: sourceIndexPath.row)
-        TODO.insert(tmpTODO, at: destinationIndexPath.row)
+        let tmpNotes = Notes.remove(at: sourceIndexPath.row)
+        Notes.insert(tmpNotes, at: destinationIndexPath.row)
     }
     
     
-
+    
 }
 
-// コレクションビューのレイアウトを設定する
+// MARK: UICollectionViewDelegateFlowLayout
+
 extension ViewController: UICollectionViewDelegateFlowLayout {
     
     /**
@@ -200,6 +214,6 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: width, height: height)
     }
-
+    
 }
 
