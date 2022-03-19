@@ -95,7 +95,7 @@ class FormViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
         let binarizedImage = ImageProcessor.binarize(image: rotatedImage)
         
-        let cornours = ImageProcessor.findContours(image: binarizedImage, source: rotatedImage)
+        let cornours = ImageProcessor.cutByContours(from: binarizedImage, source: rotatedImage)
         // 撮影した画像を追加する
         images.append(cannyImage)
         images.append(cornours)
