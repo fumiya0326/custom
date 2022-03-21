@@ -33,6 +33,9 @@ class ViewController: UIViewController {
         // 編集ボタンを設定
         navigationItem.leftBarButtonItem = editButtonItem
         
+        // タイトルを設定
+        navigationItem.title = "一覧"
+        
         // イベントリスナーの登録
         addEventListener()
         
