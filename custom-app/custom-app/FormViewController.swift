@@ -32,7 +32,11 @@ class FormViewController: UIViewController, UINavigationControllerDelegate {
         tableView.isEditing = false
         
         textField.delegate = self
+        
+        saveButton.isEnabled = false
     }
+    
+    @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet var overlayView: UIView!
     
@@ -44,6 +48,11 @@ class FormViewController: UIViewController, UINavigationControllerDelegate {
     @IBAction func tapGestureRecognizer(_ sender: Any) {
         noteTitle = textField.text
         textField.resignFirstResponder()
+        if(noteTitle?.count != 0) {
+            saveButton.isEnabled = true
+        }else{
+            saveButton.isEnabled = false
+        }
     }
     
     /**
@@ -119,7 +128,12 @@ class FormViewController: UIViewController, UINavigationControllerDelegate {
         }
         
         // ノートのエンティティ
-        let noteEntity = NoteEntity(title: title, pdfDocumentData: pdfDocument.dataRepresentation()!)
+        
+        guard let pdfDocumentData = pdfDocument.dataRepresentation() else {
+            fatalError("pdfDocument data representation is failed")
+        }
+        
+        let noteEntity = NoteEntity(id: UUID(), title: title, pdfDocumentData: pdfDocumentData)
         
         // ノートの保存
         noteEntity.insert()
@@ -271,6 +285,11 @@ extension FormViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         noteTitle = textField.text
         textField.resignFirstResponder()
+        if(noteTitle?.count != 0){
+            saveButton.isEnabled = true
+        }else{
+            saveButton.isEnabled = false
+        }
         return true
     }
 }
