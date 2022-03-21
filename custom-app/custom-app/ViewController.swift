@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PDFKit
 
 class ViewController: UIViewController {
     
@@ -16,9 +17,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // デリゲートの設定
-        habitationCollectionView.delegate = self
+        noteCollectionView.delegate = self
         // データソースの設定
-        habitationCollectionView.dataSource = self
+        noteCollectionView.dataSource = self
         
         let layout = UICollectionViewFlowLayout()
         // TODO: マージンの値を設定
@@ -27,7 +28,7 @@ class ViewController: UIViewController {
         // TODO: スペースの値を適切に設定
         layout.minimumLineSpacing = 10
         
-        habitationCollectionView.collectionViewLayout = layout
+        noteCollectionView.collectionViewLayout = layout
         
         // 編集ボタンを設定
         navigationItem.leftBarButtonItem = editButtonItem
@@ -36,10 +37,10 @@ class ViewController: UIViewController {
         addEventListener()
         
         // 複数選択を可能に
-        self.habitationCollectionView.allowsMultipleSelection = true
+        self.noteCollectionView.allowsMultipleSelection = true
         
         // DBからデータ取得
-        Notes = NoteEntity.fetchAll()
+        Notes = NoteEntity.fetchAll() as! [NoteEntity]
         
     }
     
@@ -48,8 +49,8 @@ class ViewController: UIViewController {
      */
     override func viewWillAppear(_ animated: Bool) {
         // DBから更新する
-        Notes = NoteEntity.fetchAll()
-        habitationCollectionView.reloadData()
+        Notes = NoteEntity.fetchAll() as! [NoteEntity]
+        noteCollectionView.reloadData()
     }
     
     // ノート
@@ -62,7 +63,9 @@ class ViewController: UIViewController {
     // アイテム間のスペース
     let spaceBetweenItem: CGFloat = 10
     // 一行あたりのアイテム数
-    let itemPerHeight: CGFloat = 4
+    let itemPerHeight: CGFloat = 2
+    
+    
     
     
     @IBAction func onTapAddButton(_ sender: Any) {
@@ -79,7 +82,7 @@ class ViewController: UIViewController {
      */
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        habitationCollectionView.isEditing = editing
+        noteCollectionView.isEditing = editing
     }
     
     //MARK: Gesture
@@ -89,7 +92,7 @@ class ViewController: UIViewController {
      */
     private func addEventListener() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(gesture:)))
-        habitationCollectionView.addGestureRecognizer(longPressGesture)
+        noteCollectionView.addGestureRecognizer(longPressGesture)
     }
     
     /**
@@ -99,21 +102,24 @@ class ViewController: UIViewController {
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer){
         switch(gesture.state) {
         case .began:
-            guard let selectedIndexPath = habitationCollectionView.indexPathForItem(at: gesture.location(in: habitationCollectionView)) else {
+            guard let selectedIndexPath = noteCollectionView.indexPathForItem(at: gesture.location(in: noteCollectionView)) else {
                 break
             }
-            habitationCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            noteCollectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
         case .changed:
-            habitationCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
+            noteCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
         case .ended:
-            habitationCollectionView.endInteractiveMovement()
+            noteCollectionView.endInteractiveMovement()
         default:
-            habitationCollectionView.cancelInteractiveMovement()
+            noteCollectionView.cancelInteractiveMovement()
         }
     }
     
     
-    @IBOutlet weak var habitationCollectionView: UICollectionView!
+    @IBOutlet weak var noteCollectionView: UICollectionView!
+    
+    let noteCellReuseIdentifier = "NoteCell"
+
 }
 
 // MARK: UICollectionViewDelegate
@@ -127,9 +133,23 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
      @returns セル
      */
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "habitationCell", for: indexPath) as! HabitationCollectionViewCell
-        cell.dueTimeLabel.text = "6:00"
-        cell.titleLable.text = Notes[indexPath.row].title
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: noteCellReuseIdentifier, for: indexPath) as! NoteCollectionViewCell
+        let note = Notes[indexPath.row]
+        
+        let pdfDocument = PDFDocument.init(data: note.pdfDocumentData)
+        
+        guard let pdfPage = pdfDocument?.page(at: 0) else {
+            fatalError()
+        }
+        
+        let thumbnailView = pdfPage.thumbnail(of: CGSize(width: cell.preViewImage.bounds.width, height: cell.preViewImage.bounds.height), for: .trimBox)
+        cell.preViewImage.image = thumbnailView
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        cell.dueTimeLabel.text = dateFormatter.string(from: note.updateDate)
+        cell.titleLable.text = note.title
         return cell
     }
     
@@ -149,6 +169,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
      @paarms didSelectItemAt 選択されたアイテムのインデックス
      */
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedNote = Notes[indexPath.row]
+        let storyBoard: UIStoryboard = self.storyboard!
+        let noteView = storyBoard.instantiateViewController(withIdentifier: "NoteView") as! NoteViewController
+        
+        noteView.noteEntity = selectedNote
+        
+        navigationController?.pushViewController(noteView, animated: true)
     }
     
     

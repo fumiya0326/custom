@@ -13,6 +13,7 @@
 		A0AA0F0E27E5B7B700EEACDA /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F0C27E5B7B700EEACDA /* DataModel.xcdatamodeld */; };
 		A0AA0F1027E5B92200EEACDA /* NoteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F0F27E5B92200EEACDA /* NoteEntity.swift */; };
 		A0AA0F1227E5B9C400EEACDA /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F1127E5B9C400EEACDA /* Entity.swift */; };
+		A0AA0F1427E64A1200EEACDA /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AA0F1327E64A1200EEACDA /* NoteViewController.swift */; };
 		A0C5329327DB7FA600242428 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329227DB7FA600242428 /* FormViewController.swift */; };
 		A0C5329727DC87A700242428 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5329627DC87A700242428 /* ImageTableViewCell.swift */; };
 		A0E5F63A27D23E8C00B3A43B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */; };
@@ -26,7 +27,7 @@
 		A0E5F66B27D25A0A00B3A43B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */; };
 		A0E5F66E27D25BCB00B3A43B /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */; };
 		A0E5F67027D320AC00B3A43B /* HabitationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F66F27D320AC00B3A43B /* HabitationTableViewController.swift */; };
-		A0E5F67227D3292D00B3A43B /* HabitationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F67127D3292D00B3A43B /* HabitationCollectionViewCell.swift */; };
+		A0E5F67227D3292D00B3A43B /* NoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F67127D3292D00B3A43B /* NoteCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		A0AA0F0D27E5B7B700EEACDA /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		A0AA0F0F27E5B92200EEACDA /* NoteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEntity.swift; sourceTree = "<group>"; };
 		A0AA0F1127E5B9C400EEACDA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		A0AA0F1327E64A1200EEACDA /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		A0C5329227DB7FA600242428 /* FormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		A0C5329627DC87A700242428 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		A0E5F63627D23E8C00B3A43B /* custom-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "custom-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,7 +74,7 @@
 		A0E5F66A27D25A0A00B3A43B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
 		A0E5F66F27D320AC00B3A43B /* HabitationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitationTableViewController.swift; sourceTree = "<group>"; };
-		A0E5F67127D3292D00B3A43B /* HabitationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitationCollectionViewCell.swift; sourceTree = "<group>"; };
+		A0E5F67127D3292D00B3A43B /* NoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,13 +141,13 @@
 				A0E5F63927D23E8C00B3A43B /* AppDelegate.swift */,
 				A0C5329627DC87A700242428 /* ImageTableViewCell.swift */,
 				A0C5329227DB7FA600242428 /* FormViewController.swift */,
-				A0AA0F0C27E5B7B700EEACDA /* DataModel.xcdatamodeld */,
 				A0AA0F0727DF610600EEACDA /* ImageProcessor.swift */,
 				A0E5F66927D25A0A00B3A43B /* Model.xcdatamodeld */,
 				A0E5F63B27D23E8C00B3A43B /* SceneDelegate.swift */,
 				A0E5F63D27D23E8C00B3A43B /* ViewController.swift */,
-				A0E5F67127D3292D00B3A43B /* HabitationCollectionViewCell.swift */,
+				A0E5F67127D3292D00B3A43B /* NoteCollectionViewCell.swift */,
 				A0E5F63F27D23E8C00B3A43B /* Main.storyboard */,
+				A0AA0F1327E64A1200EEACDA /* NoteViewController.swift */,
 				A0E5F66F27D320AC00B3A43B /* HabitationTableViewController.swift */,
 				A0E5F64227D23E8E00B3A43B /* Assets.xcassets */,
 				A0E5F64427D23E8E00B3A43B /* LaunchScreen.storyboard */,
@@ -177,6 +179,7 @@
 			children = (
 				A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */,
 				A0AA0F0F27E5B92200EEACDA /* NoteEntity.swift */,
+				A0AA0F0C27E5B7B700EEACDA /* DataModel.xcdatamodeld */,
 				A0AA0F1127E5B9C400EEACDA /* Entity.swift */,
 			);
 			path = DataBase;
@@ -312,9 +315,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AA0F1427E64A1200EEACDA /* NoteViewController.swift in Sources */,
 				A0AA0F0E27E5B7B700EEACDA /* DataModel.xcdatamodeld in Sources */,
 				A0E5F67027D320AC00B3A43B /* HabitationTableViewController.swift in Sources */,
-				A0E5F67227D3292D00B3A43B /* HabitationCollectionViewCell.swift in Sources */,
+				A0E5F67227D3292D00B3A43B /* NoteCollectionViewCell.swift in Sources */,
 				A0AA0F0827DF610600EEACDA /* ImageProcessor.swift in Sources */,
 				A0E5F66E27D25BCB00B3A43B /* DatabaseController.swift in Sources */,
 				A0E5F63E27D23E8C00B3A43B /* ViewController.swift in Sources */,

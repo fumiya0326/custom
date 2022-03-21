@@ -32,7 +32,7 @@ class DatabaseController {
         do {
             try context.save()
         } catch {
-           fatalError()
+           fatalError("\(error)")
         }
     }
     
