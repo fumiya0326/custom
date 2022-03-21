@@ -48,6 +48,11 @@ class FormViewController: UIViewController, UINavigationControllerDelegate {
     @IBAction func tapGestureRecognizer(_ sender: Any) {
         noteTitle = textField.text
         textField.resignFirstResponder()
+        if(noteTitle?.count != 0) {
+            saveButton.isEnabled = true
+        }else{
+            saveButton.isEnabled = false
+        }
     }
     
     /**
@@ -280,7 +285,11 @@ extension FormViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         noteTitle = textField.text
         textField.resignFirstResponder()
-        saveButton.isEnabled = true
+        if(noteTitle?.count != 0){
+            saveButton.isEnabled = true
+        }else{
+            saveButton.isEnabled = false
+        }
         return true
     }
 }
