@@ -43,8 +43,12 @@ class ViewController: UIViewController {
         self.noteCollectionView.allowsMultipleSelection = true
         
         // DBからデータ取得
-        Notes = NoteEntity.fetchAll() as! [NoteEntity]
+        Notes = NoteEntityController.fetchAll() as! [NoteEntity]
         
+        // 複数選択の許可
+        noteCollectionView.allowsMultipleSelectionDuringEditing = true
+        
+        deleteButton.tintColor = .darkGray
     }
     
     /**
@@ -52,7 +56,7 @@ class ViewController: UIViewController {
      */
     override func viewWillAppear(_ animated: Bool) {
         // DBから更新する
-        Notes = NoteEntity.fetchAll() as! [NoteEntity]
+        Notes = NoteEntityController.fetchAll() as! [NoteEntity]
         noteCollectionView.reloadData()
     }
     
@@ -68,7 +72,8 @@ class ViewController: UIViewController {
     // 一行あたりのアイテム数
     let itemPerHeight: CGFloat = 2
     
-    
+    // 選択されたアイテムの位置
+    var selectedItemIndexes: [Int] = []
     
     
     @IBAction func onTapAddButton(_ sender: Any) {
@@ -85,7 +90,16 @@ class ViewController: UIViewController {
      */
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        if(!editing){
+            print(selectedItemIndexes)
+            selectedItemIndexes = []
+        }
         noteCollectionView.isEditing = editing
+        if editing {
+            deleteButton.tintColor = UIColor(red: 0.4, green: 0.8, blue: 0.65, alpha: 1.0)
+        } else {
+            deleteButton.tintColor = .darkGray
+        }
     }
     
     //MARK: Gesture
@@ -121,8 +135,45 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var noteCollectionView: UICollectionView!
     
+    // noteCollectionViewCellのidentifier
     let noteCellReuseIdentifier = "NoteCell"
 
+    // 削除ボタン
+    @IBOutlet weak var deleteButton: UIToolbar!
+    
+    /*
+     削除ボタン押下時のアクション
+     */
+    @IBAction func onTappedDeleteItemButton(_ sender: Any) {
+        
+        // 編集中以外は何もしない
+        guard isEditing else {
+            return
+        }
+        
+        // アクション
+        let actionSheet = UIAlertController(title: "確認", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+        
+        // 削除時
+        let deleteAction = UIAlertAction(title: "削除する", style: .destructive, handler: {_ in
+            self.selectedItemIndexes.forEach({ index in
+                print(self.Notes[index].id)
+                NoteEntityController().deleteById(id: self.Notes[index].id )
+                self.Notes.remove(at: index)
+            })
+            self.noteCollectionView.reloadData()
+        })
+        
+        // キャンセル時
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel, handler: { _ in
+            // 何もしない
+        })
+        
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
 }
 
 // MARK: UICollectionViewDelegate
@@ -153,6 +204,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         dateFormatter.dateFormat = "yyyy/MM/dd"
         cell.dueTimeLabel.text = dateFormatter.string(from: note.updateDate)
         cell.titleLable.text = note.title
+        let selectedView = UIView()
+        selectedView.backgroundColor = UIColor(red: 0.3, green: 0.8, blue: 0.6, alpha: 0.3)
+        selectedView.layer.cornerRadius = 10
+        cell.selectedBackgroundView = selectedView
+        
         return cell
     }
     
@@ -166,12 +222,23 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         return Notes.count
     }
     
+
+    
     /**
      選択時のdelegateメソッド
      @params collectionView コレクションビュー
      @paarms didSelectItemAt 選択されたアイテムのインデックス
      */
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if isEditing {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: noteCellReuseIdentifier, for: indexPath) as! NoteCollectionViewCell
+            if(!selectedItemIndexes.contains(indexPath.row)){
+                selectedItemIndexes.append(indexPath.row)
+                print(indexPath.row)
+            }
+            cell.isSelected = true
+            return
+        }
         let selectedNote = Notes[indexPath.row]
         let storyBoard: UIStoryboard = self.storyboard!
         let noteView = storyBoard.instantiateViewController(withIdentifier: "NoteView") as! NoteViewController
@@ -179,6 +246,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         noteView.noteEntity = selectedNote
         
         navigationController?.pushViewController(noteView, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if isEditing {
+            if(selectedItemIndexes.contains(indexPath.row)) {
+                selectedItemIndexes.remove(at: selectedItemIndexes.firstIndex(of: indexPath.row)!)
+            }
+        }
     }
     
     

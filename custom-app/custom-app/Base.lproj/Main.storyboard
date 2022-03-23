@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.26946388599999999" green="0.53469677469999999" blue="0.45320419579999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <color key="barTintColor" red="0.052549794249999997" green="0.056332707240000002" blue="0.084941350449999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="barTintColor" red="0.066356250059032687" green="0.087768079656123765" blue="0.078233466581278249" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </navigationBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="1Yu-ba-4M4"/>
@@ -37,7 +37,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cYW-TN-oJJ">
                                 <rect key="frame" x="0.0" y="88" width="414" height="730"/>
-                                <color key="backgroundColor" red="0.052549794254272766" green="0.056332707240360963" blue="0.084941350450419395" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.059334930020000003" green="0.084941350449999994" blue="0.063034060530000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DUC-9x-EJT">
                                     <size key="itemSize" width="174" height="204"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -94,7 +94,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" red="0.26946388599999999" green="0.53469677469999999" blue="0.45320419579999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.28384318232755101" green="0.53953889709583336" blue="0.54483136027848644" alpha="0.80669559706125826" colorSpace="custom" customColorSpace="displayP3"/>
                                         <size key="customSize" width="174" height="204"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.corner">
@@ -115,8 +115,15 @@
                                     <constraint firstAttribute="height" constant="44" id="C7F-Cu-exc"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem title="Item" id="8Os-Wy-RDh"/>
+                                    <barButtonItem title="Item" image="square.and.arrow.up" catalog="system" id="8Os-Wy-RDh"/>
+                                    <barButtonItem width="312" style="plain" systemItem="fixedSpace" id="CUb-k0-IkO"/>
+                                    <barButtonItem image="trash" catalog="system" id="hqV-YX-uKw">
+                                        <connections>
+                                            <action selector="onTappedDeleteItemButton:" destination="BYZ-38-t0r" id="P3u-WE-3V9"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
+                                <color key="tintColor" red="0.26946388599999999" green="0.53469677469999999" blue="0.45320419579999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="barTintColor" red="0.052549794249999997" green="0.056332707240000002" blue="0.084941350449999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </toolbar>
                         </subviews>
@@ -141,12 +148,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteButton" destination="KYL-sU-8WG" id="e2V-r9-sI7"/>
                         <outlet property="noteCollectionView" destination="cYW-TN-oJJ" id="lst-cX-7bU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-246.37681159420291" y="-2.0089285714285712"/>
+            <point key="canvasLocation" x="603" y="-98"/>
         </scene>
         <!--Note View Controller-->
         <scene sceneID="q8y-tF-fMt">
@@ -231,6 +239,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mOI-fc-nez">
                                 <rect key="frame" x="0.0" y="345" width="414" height="517"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" red="0.059334930020000003" green="0.084941350449999994" blue="0.063034060530000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="112" id="273-NP-qaL" customClass="ImageTableViewCell" customModule="custom_app" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="24.5" width="414" height="112"/>
@@ -286,7 +295,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ish-Hx-XlN"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.059334930020000003" green="0.084941350449999994" blue="0.063034060530000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="c08-SH-CXt" firstAttribute="top" secondItem="bdn-yY-7eS" secondAttribute="bottom" constant="53" id="4hp-7Y-G0Y"/>
@@ -360,6 +369,8 @@
     <resources>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="circle.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

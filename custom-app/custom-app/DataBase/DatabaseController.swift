@@ -79,4 +79,19 @@ class DatabaseController {
             fatalError()
         }
     }
+
+    
+    /**
+     条件で削除する
+     @param entityName エンティティの名前
+     @param condition 条件式
+     */
+    func deleteWith(_ entityName: String,condition: String?){
+        let managedObjects = fetch(entityName, with: condition)
+        let managedObjectContext = persistentContainer.viewContext
+        managedObjects.forEach({ managedObject in
+            managedObjectContext.delete(managedObject)
+        })
+        saveContext()
+    }
 }
