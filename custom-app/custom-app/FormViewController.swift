@@ -133,10 +133,10 @@ class FormViewController: UIViewController, UINavigationControllerDelegate {
             fatalError("pdfDocument data representation is failed")
         }
         
-        let noteEntity = NoteEntity(id: UUID(), title: title, pdfDocumentData: pdfDocumentData)
+        let noteEntity = NoteEntity(id: UUID(), title: title, pdfDocumentData: pdfDocumentData, updateDate: Date())
         
         // ノートの保存
-        noteEntity.insert()
+        NoteEntityController().insert(entity: noteEntity)
         
         // 画面を閉じる
         self.dismiss(animated: true, completion: nil)

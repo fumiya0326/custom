@@ -9,42 +9,11 @@ import Foundation
 import CoreData
 
 
-class NoteEntity: Entity {
+class NoteEntityController: EntityConroller {
     
     var entityName = "Note"
-    var attributes: Dictionary<String, Any>
-    
-    let title: String
-    let pdfDocumentData: Data
-    let updateDate: Date
-    let id: UUID
-    
-    init(id: UUID, title: String, pdfDocumentData: Data) {
-        self.title = title
-        self.pdfDocumentData = pdfDocumentData
-        updateDate = Date()
-        self.id = id
-        self.attributes = [
-            "id": id,
-            "title": title,
-            "pdfDocument": pdfDocumentData,
-            "updateDate": updateDate,
-        ]
-    }
-    
-    init(id: UUID, title: String, pdfDocumentData: Data, updateDate: Date) {
-        self.title = title
-        self.pdfDocumentData = pdfDocumentData
-        self.updateDate = updateDate
-        self.id = id
-        self.attributes = [
-            "id": id,
-            "title": title,
-            "pdfDocument": pdfDocumentData,
-            "updateDate": updateDate,
-        ]
-    }
-    
+
+    init(){}
     
     /**
      すべてのNoteEntityを取得
@@ -63,12 +32,8 @@ class NoteEntity: Entity {
     /**
      作成
      */
-    func insert(){
-        print(id)
-        print(title)
-        print(updateDate)
-        print(pdfDocumentData)
-        DatabaseController().insert(entity: self)
+    func insert(entity: Entity){
+        DatabaseController().insert(entity: entity)
     }
     
     
@@ -83,6 +48,14 @@ class NoteEntity: Entity {
         return Self.convertToEntity(from: notes[0])
     }
     
+    /**
+     idで検索して削除
+     @param id 固有のID
+     */
+    func deleteById(id: UUID) {
+        DatabaseController().deleteWith(entityName, condition: "id = \"\(id)\"")
+    }
+    
     
     /**
      NoteオブジェクトをNoteEntityへ変換する
@@ -90,5 +63,29 @@ class NoteEntity: Entity {
     static func convertToEntity(from entity: Note) -> NoteEntity {
         return NoteEntity(id: entity.id!, title: entity.title!, pdfDocumentData: entity.pdfDocument!, updateDate: entity.updateDate!)
     }
-
 }
+
+class NoteEntity: Entity {
+    var entityName = "Note"
+    var attributes: Dictionary<String, Any>
+    
+    let title: String
+    let pdfDocumentData: Data
+    let updateDate: Date
+    let id: UUID
+    
+    init(id: UUID, title: String, pdfDocumentData: Data, updateDate: Date){
+        self.title = title
+        self.pdfDocumentData = pdfDocumentData
+        self.updateDate = updateDate
+        self.id = id
+        self.attributes = [
+            "id": id,
+            "title": title,
+            "pdfDocument": pdfDocumentData,
+            "updateDate": updateDate,
+        ]
+    }
+    
+}
+
