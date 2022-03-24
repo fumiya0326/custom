@@ -175,10 +175,13 @@ extension FormViewController: UIImagePickerControllerDelegate {
         let binarizedImage = ImageProcessor.binarize(image: rotatedImage)
         
         let cornours = ImageProcessor.cutByContours(from: binarizedImage, source: rotatedImage)
+        
+        let adjustColor = ImageProcessor.adjustColor(image: cornours, alpha: 1.6, beta: 10)
+        
         // 撮影した画像を追加する
         images.append(cannyImage)
         images.append(cornours)
-        images.append(binarizedImage)
+        images.append(adjustColor)
         
         // 表示の更新のためテーブルビューを更新する
         self.tableView.reloadData()
