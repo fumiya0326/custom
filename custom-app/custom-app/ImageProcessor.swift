@@ -130,4 +130,19 @@ class ImageProcessor {
         
         return point2fArray
     }
+    
+    
+    /**
+     カラーを調整
+     @param image 画像
+     @param alpha 彩度
+     @beta 明度
+     @returns 調整された画像
+     */
+    static func adjustColor(image: UIImage, alpha: Double, beta: Double) -> UIImage {
+        let mat = Mat(uiImage: image)
+        let dstMat = Mat()
+        Core.convertScaleAbs(src: mat, dst: dstMat, alpha: alpha, beta: beta)
+        return dstMat.toUIImage()
+    }
 }
