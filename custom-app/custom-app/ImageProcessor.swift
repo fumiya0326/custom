@@ -78,6 +78,7 @@ class ImageProcessor {
         let maxXPoint = Int(rect2.x + rect2.width)
         let minYPoint = Int(rect2.y)
         let maxYPoint = Int(rect2.y + rect2.height)
+        
     
         // 切り抜き位置
         let rect = CGRect(x: minXPoint, y: minYPoint, width: maxXPoint-minXPoint, height: maxYPoint-minYPoint)
@@ -101,17 +102,34 @@ class ImageProcessor {
 
         var maxArea: Double = 0
         var maxAreaIndex = 0
-        for i in 0...contours.count - 1 {
+        var maxRectArea: Double = 0
+        var maxRectAreaIndex: Int = 0
+        for i in 1...contours.count - 1 {
             let matOfContour = MatOfPoint(array: contours[i]) as Mat
             let tmpArea = Imgproc.contourArea(contour: matOfContour)
             if(tmpArea > maxArea) {
                 maxArea = tmpArea
                 maxAreaIndex = i
             }
+            var approx: [Point2f] =  []
+            let point2fContour: [Point2f] = convertToPoint2fArray(from: contours[i])
+            Imgproc.approxPolyDP(curve: convertToPoint2fArray(from: contours[i]), approxCurve: &approx, epsilon: 0.01 * Imgproc.arcLength(curve: point2fContour, closed: true), closed: true)
+            if approx.count == 4 {
+                print(contours[i])
+                Imgproc.drawContours(image: sourceMat, contours: contours, contourIdx: Int32(i), color: Scalar(0,255,255,255))
+                let matOfContourRect = MatOfPoint(array: contours[i]) as Mat
+                let tmpArea = Imgproc.contourArea(contour: matOfContour)
+                if(tmpArea > maxArea) {
+                    maxRectAreaIndex = i
+                    maxRectArea = tmpArea
+                }
+            }
         }
         
+        print(contours[maxRectAreaIndex])
+        
         // 輪郭格納の配列、一番広い輪郭の位置
-        return (contours, maxAreaIndex)
+        return (contours, maxRectAreaIndex)
     }
     
     /**
