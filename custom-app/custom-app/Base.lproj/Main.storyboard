@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wMC-9s-aMy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wMC-9s-aMy">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -154,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="603" y="-98"/>
+            <point key="canvasLocation" x="1522" y="195"/>
         </scene>
         <!--Note View Controller-->
         <scene sceneID="q8y-tF-fMt">
@@ -165,14 +167,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxf-dE-5yh">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
                                 <items>
                                     <barButtonItem title="Item" id="RFv-gn-1oN"/>
                                 </items>
                                 <color key="barTintColor" red="0.052549794249999997" green="0.056332707240000002" blue="0.084941350449999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4l-OA-nGU">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
@@ -242,7 +244,7 @@
                                 <color key="sectionIndexBackgroundColor" red="0.059334930020000003" green="0.084941350449999994" blue="0.063034060530000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="112" id="273-NP-qaL" customClass="ImageTableViewCell" customModule="custom_app" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="414" height="112"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="112"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="273-NP-qaL" id="9RI-tk-4Ec">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="112"/>
@@ -336,26 +338,37 @@
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l5l-OV-Bhc">
-                            <rect key="frame" x="0.0" y="84" width="240" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l5l-OV-Bhc">
+                            <rect key="frame" x="0.0" y="28" width="240" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="YPw-cD-oOj"/>
+                            </constraints>
                             <items>
-                                <barButtonItem title="Item" id="eeQ-nq-ed3"/>
-                                <barButtonItem image="circle.circle.fill" catalog="system" id="RvI-dd-NOe">
+                                <barButtonItem title="Item" image="backward.frame.fill" catalog="system" id="eeQ-nq-ed3"/>
+                                <barButtonItem width="64" style="plain" systemItem="fixedSpace" id="iI8-Bj-WJa"/>
+                                <barButtonItem id="RvI-dd-NOe">
+                                    <imageReference key="image" image="circle.circle.fill" catalog="system" symbolScale="large"/>
                                     <connections>
                                         <action selector="onTappedtakePicture:" destination="Ybe-jR-i2N" id="ZkD-q3-5NZ"/>
                                     </connections>
                                 </barButtonItem>
-                                <barButtonItem title="finish" id="van-ML-e2g">
+                                <barButtonItem width="78" style="plain" systemItem="fixedSpace" id="3CY-to-t39"/>
+                                <barButtonItem image="play.fill" catalog="system" id="van-ML-e2g">
                                     <connections>
                                         <action selector="onTappedFininshButton:" destination="Ybe-jR-i2N" id="n85-cG-2Fu"/>
                                     </connections>
                                 </barButtonItem>
                             </items>
+                            <color key="tintColor" red="0.4147236769" green="0.80995315310000005" blue="0.68415001460000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </toolbar>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="dS9-c3-xv3"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="l5l-OV-Bhc" firstAttribute="centerX" secondItem="L2h-NX-MDn" secondAttribute="centerX" id="1Rg-im-S4v"/>
+                        <constraint firstItem="l5l-OV-Bhc" firstAttribute="leading" secondItem="dS9-c3-xv3" secondAttribute="leading" id="KLK-Ny-4Yp"/>
+                        <constraint firstItem="l5l-OV-Bhc" firstAttribute="bottom" secondItem="dS9-c3-xv3" secondAttribute="bottom" id="szy-cj-vsP"/>
+                    </constraints>
                 </view>
                 <tapGestureRecognizer id="6QQ-JC-9gb">
                     <connections>
@@ -367,8 +380,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="backward.frame.fill" catalog="system" width="128" height="93"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="circle.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
