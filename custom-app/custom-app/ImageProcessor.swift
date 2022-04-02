@@ -21,7 +21,8 @@ class ImageProcessor {
         let dstMat = Mat()
         Imgproc.cvtColor(src: mat, dst: dstMat, code: .COLOR_BGR2GRAY)
         let binarizedMat = Mat()
-        Imgproc.threshold(src: dstMat, dst: binarizedMat, thresh: 150, maxval: 255, type: .THRESH_BINARY)
+        // threshは低くするほど
+        Imgproc.threshold(src: dstMat, dst: binarizedMat, thresh: 170, maxval: 255, type: .THRESH_BINARY)
         return binarizedMat.toUIImage()
     }
     
@@ -53,16 +54,19 @@ class ImageProcessor {
     }
     
     /**
-     輪郭検出
+     指定の位置で切り取り
      @param image 画像
      @param source もとの画像
      */
-    static func cutByContours(from image: UIImage, source: UIImage) -> UIImage {
+    static func cutByContours(from image: UIImage,  origin: UIImage,by contours: [[Point2i]], maxAreaIndex: Int) -> UIImage {
         let mat = Mat(uiImage: image)
         
-        let originMat = Mat(uiImage: source)
+        let originMat = Mat(uiImage: origin)
     
-        let (contours, maxAreaIndex) = findContours(from: mat)
+        // 輪郭検出
+        let findContoursResult = findContours(from: mat)
+        let contours = findContoursResult.contours
+        let maxAreaIndex = findContoursResult.maxRectAreaIndex
         
         var approx: [Point2f] = []
         let point2fArray = convertToPoint2fArray(from: contours[maxAreaIndex])
@@ -79,12 +83,18 @@ class ImageProcessor {
         let minYPoint = Int(rect2.y)
         let maxYPoint = Int(rect2.y + rect2.height)
         
-    
         // 切り抜き位置
         let rect = CGRect(x: minXPoint, y: minYPoint, width: maxXPoint-minXPoint, height: maxYPoint-minYPoint)
-        
         // 切り抜き後の画像を返す
         return UIImage(cgImage: originMat.toCGImage().cropping(to: rect)!)
+    }
+    
+    struct FindContoursResult {
+        var contours: [[Point2i]]
+        var maxRectAreaIndex: Int
+        var perspectiveMat: Mat
+        var width: Int32
+        var height: Int32
     }
     
     /**
@@ -92,7 +102,7 @@ class ImageProcessor {
      @param sourceMat 輪郭を検出する画像を表す行列
      @return 輪郭格納する配列、一番広い輪郭のインデックス
      */
-    static func findContours(from sourceMat: Mat ) -> ([[Point2i]], Int) {
+    static func findContours(from sourceMat: Mat) -> FindContoursResult {
         let dstMat = Mat()
         // 検出された輪郭を格納する配列
         var contours: [[Point2i]] = [[]]
@@ -101,35 +111,110 @@ class ImageProcessor {
         Imgproc.findContours(image: sourceMat, contours: &contours, hierarchy: dstMat, mode: .RETR_TREE, method: .CHAIN_APPROX_TC89_L1)
 
         var maxArea: Double = 0
-        var maxAreaIndex = 0
         var maxRectArea: Double = 0
         var maxRectAreaIndex: Int = 0
+        var maxApprox: [Point2f] = []
+
         for i in 1...contours.count - 1 {
             let matOfContour = MatOfPoint(array: contours[i]) as Mat
             let tmpArea = Imgproc.contourArea(contour: matOfContour)
             if(tmpArea > maxArea) {
                 maxArea = tmpArea
-                maxAreaIndex = i
+            }else{
+                // 面積が更新されない場合は何もしない
+                continue
             }
+            
             var approx: [Point2f] =  []
             let point2fContour: [Point2f] = convertToPoint2fArray(from: contours[i])
-            Imgproc.approxPolyDP(curve: convertToPoint2fArray(from: contours[i]), approxCurve: &approx, epsilon: 0.01 * Imgproc.arcLength(curve: point2fContour, closed: true), closed: true)
+            
+            // 矩形検出処理
+            Imgproc.approxPolyDP(curve: convertToPoint2fArray(from: contours[i]), approxCurve: &approx, epsilon: 0.05 * Imgproc.arcLength(curve: point2fContour, closed: true), closed: true)
             if approx.count == 4 {
-                print(contours[i])
                 Imgproc.drawContours(image: sourceMat, contours: contours, contourIdx: Int32(i), color: Scalar(0,255,255,255))
-                let matOfContourRect = MatOfPoint(array: contours[i]) as Mat
                 let tmpArea = Imgproc.contourArea(contour: matOfContour)
-                if(tmpArea > maxArea) {
+                if(tmpArea > maxRectArea) {
+                    maxApprox = approx
                     maxRectAreaIndex = i
                     maxRectArea = tmpArea
                 }
             }
         }
+    
+        // 座標の位置をソートする
+        let sorted = sortRectPoint(from: maxApprox)
+        let height = sorted[1].y - sorted[0].y
+        let width = sorted[2].x - sorted[0].x
+        // 補正後のポイント
+        let points = [Point2f(x: 0, y: 0), Point2f(x: 0, y: height), Point2f(x: width, y: 0), Point2f(x:width,y:height)]
         
-        print(contours[maxRectAreaIndex])
+        // 視点の行列
+        let perspectiveMat = Imgproc.getPerspectiveTransform(src: MatOfPoint2f(array: sorted) as Mat, dst: MatOfPoint2f(array: points) as Mat)
         
-        // 輪郭格納の配列、一番広い輪郭の位置
-        return (contours, maxRectAreaIndex)
+        // 輪郭格納の配列、一番広い輪郭の位置, 視点の行列
+        return FindContoursResult(
+            contours: contours,
+            maxRectAreaIndex: maxRectAreaIndex,
+            perspectiveMat: perspectiveMat,
+            width: Int32(width),
+            height: Int32(height)
+        )
+    }
+    
+    /**
+     透視変換
+     @param 画像
+     @param 視点行列
+     */
+    static func transformPerspective(from image: UIImage, with perspeciveMat: Mat, width: Int32, height: Int32) -> UIImage {
+        let sourceMat = Mat(uiImage: image)
+        let dstMat = Mat()
+        print("transform")
+        print(perspeciveMat)
+        Imgproc.warpPerspective(src: sourceMat, dst: dstMat, M: perspeciveMat, dsize: Size2i(width: width, height: height))
+        return dstMat.toUIImage()
+    }
+
+    /**
+     四角のポイントをソート
+     @param from point2f配列
+     */
+    private static func sortRectPoint(from pointArray: [Point2f]) -> [Point2f]{
+        // TODO: より適切な方法でソートする
+        let temp = pointArray.sorted(by: { a, b in
+            return a.x < b.x
+        })
+        var sum: (Float,Float) = (0,0)
+        pointArray.forEach({ point in
+            sum.0 += point.x
+            sum.1 += point.y
+        })
+        let gravityX = sum.0 / 4
+        let gravityY = sum.1 / 4
+        print(gravityX)
+        print(gravityY)
+        print(temp)
+        
+        var sorted: [Point2f] = []
+        
+        // ひし形の場合は当てはまらない
+        if(temp[0].y < temp[1].y){
+            sorted.append(temp[0])
+            sorted.append(temp[1])
+        }else{
+            sorted.append(temp[1])
+            sorted.append(temp[0])
+        }
+        
+        if(temp[2].y < temp[3].y){
+            sorted.append(temp[2])
+            sorted.append(temp[3])
+        }else{
+            sorted.append(temp[3])
+            sorted.append(temp[2])
+        }
+        // 左上、左下、右上、右下
+        return sorted
     }
     
     /**
@@ -147,6 +232,23 @@ class ImageProcessor {
         })
         
         return point2fArray
+    }
+    
+    /**
+     Point2f配列をPoint２i配列へ変換
+     @param from Point2f配列
+     @return Point２i配列
+     */
+    private static func convertToPoint2iArray(from piont2fArray: [Point2f]) -> [Point2i] {
+        var point2iArray: [Point2i] = []
+        
+        // point2fへ変換
+        piont2fArray.forEach({ point2f in
+            let point = Point2i(x: Int32(point2f.x), y: Int32(point2f.y))
+            point2iArray.append(point)
+        })
+        
+        return point2iArray
     }
     
     

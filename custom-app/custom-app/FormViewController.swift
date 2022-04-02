@@ -174,15 +174,24 @@ extension FormViewController: UIImagePickerControllerDelegate {
         
         let binarizedImage = ImageProcessor.binarize(image: rotatedImage)
         
-        let cornours = ImageProcessor.cutByContours(from: binarizedImage, source: rotatedImage)
+        // 輪郭検出
+        let result = ImageProcessor.findContours(from: Mat(uiImage: binarizedImage))
+        let perspectiveMat = result.perspectiveMat
+        let width = result.width
+        let height = result.height
         
-        let adjustColor = ImageProcessor.adjustColor(image: cornours, alpha: 1.6, beta: 10)
+        // 透視変換を行う
+        let transformedPerspectiveImage = ImageProcessor.transformPerspective(from: rotatedImage, with: perspectiveMat,width: width, height: height)
+        // カットする
+//        let cornours = ImageProcessor.cutByContours(from: binarizedImage,origin: rotatedImage, by: contours, maxAreaIndex: maxAreaIndex)
+        
+        let adjustColorImage = ImageProcessor.adjustColor(image: transformedPerspectiveImage, alpha: 1.9, beta: 0)
         
         // 撮影した画像を追加する
-        images.append(cannyImage)
-        images.append(cornours)
-        images.append(adjustColor)
-        
+//        images.append(binarizedImage)
+//        images.append(cornours)
+        images.append(adjustColorImage)
+        images.append(transformedPerspectiveImage)
         // 表示の更新のためテーブルビューを更新する
         self.tableView.reloadData()
     }
