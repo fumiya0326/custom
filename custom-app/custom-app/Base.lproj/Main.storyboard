@@ -167,14 +167,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxf-dE-5yh">
-                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
                                     <barButtonItem title="Item" id="RFv-gn-1oN"/>
                                 </items>
                                 <color key="barTintColor" red="0.052549794249999997" green="0.056332707240000002" blue="0.084941350449999994" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4l-OA-nGU">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
@@ -200,6 +200,76 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qbM-fz-DlH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-223.18840579710147" y="652.90178571428567"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="qdv-3k-22m">
+            <objects>
+                <viewController storyboardIdentifier="CameraViewController" id="ZLT-br-YH3" customClass="CameraViewController" customModule="custom_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WR8-dt-o9B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t76-bi-Xko">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="746"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTQ-8u-Kwu">
+                                <rect key="frame" x="0.0" y="746" width="414" height="150"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="63Z-gb-Wxu">
+                                        <rect key="frame" x="163" y="47" width="88" height="56"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="">
+                                            <imageReference key="image" image="circle.inset.filled" catalog="system" symbolScale="large"/>
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="onTappedCaptureButton:" destination="ZLT-br-YH3" eventType="touchUpInside" id="VBa-lp-SBX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fch-Vc-hdG">
+                                        <rect key="frame" x="300" y="61" width="43" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrowtriangle.right.fill" catalog="system"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxs-Jh-Pnh">
+                                        <rect key="frame" x="300" y="59" width="43" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrowtriangle.right.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="onTappedFinishButton:" destination="ZLT-br-YH3" eventType="touchUpInside" id="eEW-UY-VKQ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="AYb-sO-gBZ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="jFb-1F-LLx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="gTQ-8u-Kwu" secondAttribute="bottom" id="5Ie-IQ-QlN"/>
+                            <constraint firstItem="gTQ-8u-Kwu" firstAttribute="top" secondItem="t76-bi-Xko" secondAttribute="bottom" id="8ir-wf-sOo"/>
+                            <constraint firstItem="gTQ-8u-Kwu" firstAttribute="trailing" secondItem="jFb-1F-LLx" secondAttribute="trailing" id="DL8-Ty-WzH"/>
+                            <constraint firstItem="t76-bi-Xko" firstAttribute="leading" secondItem="jFb-1F-LLx" secondAttribute="leading" id="JjT-Hb-xmh"/>
+                            <constraint firstItem="t76-bi-Xko" firstAttribute="trailing" secondItem="jFb-1F-LLx" secondAttribute="trailing" id="Y8S-f4-jzO"/>
+                            <constraint firstItem="gTQ-8u-Kwu" firstAttribute="leading" secondItem="jFb-1F-LLx" secondAttribute="leading" id="fIo-KY-wwi"/>
+                            <constraint firstItem="t76-bi-Xko" firstAttribute="top" secondItem="WR8-dt-o9B" secondAttribute="top" id="xI2-Do-JvE"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="t76-bi-Xko" id="Cmx-CP-g7W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tcU-QH-LU6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1386.9565217391305" y="-653.57142857142856"/>
         </scene>
         <!--Form View Controller-->
         <scene sceneID="IHH-Vr-aXG">
@@ -380,9 +450,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowtriangle.right.fill" catalog="system" width="128" height="113"/>
         <image name="backward.frame.fill" catalog="system" width="128" height="93"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="circle.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="circle.inset.filled" catalog="system" width="128" height="121"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="trash" catalog="system" width="121" height="128"/>
