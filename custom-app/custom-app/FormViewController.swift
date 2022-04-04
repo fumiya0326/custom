@@ -36,6 +36,12 @@ class FormViewController: UIViewController, UINavigationControllerDelegate {
         saveButton.isEnabled = false
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        print("viewdidappea")
+        tableView.reloadData()
+    }
+    
+
     @IBOutlet weak var saveButton: UIButton!
     
     @IBOutlet var overlayView: UIView!
@@ -59,16 +65,9 @@ class FormViewController: UIViewController, UINavigationControllerDelegate {
      カメラボタンタップ時
      */
     @IBAction func onTappedCameraButton(_ sender: Any) {
-        if(UIImagePickerController.isSourceTypeAvailable(.camera)) {
-            imagePicker.sourceType = .camera
-            imagePicker.delegate = self
-            overlayView.frame = (imagePicker.cameraOverlayView?.frame)!
-            imagePicker.cameraOverlayView = overlayView
-            imagePicker.showsCameraControls = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }else {
-            fatalError()
-        }
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextViewController = storyboard.instantiateViewController(withIdentifier: "CameraViewController")
+        self.present(nextViewController, animated: true)
     }
     
     // 撮影画像一覧
@@ -168,14 +167,14 @@ extension FormViewController: UIImagePickerControllerDelegate {
             fatalError()
         }
         
-        let rotatedImage = ImageProcessor.rotate(image: image)
+        let rotatedImage = ImageProcessor.rotateClockWise(image: image)
         
         let cannyImage = ImageProcessor.canny(image: rotatedImage)
         
         let binarizedImage = ImageProcessor.binarize(image: rotatedImage)
         
         // 輪郭検出
-        let result = ImageProcessor.findContours(from: Mat(uiImage: binarizedImage))
+        let result = try! ImageProcessor.findContours(from: Mat(uiImage: binarizedImage))
         let perspectiveMat = result.perspectiveMat
         let width = result.width
         let height = result.height

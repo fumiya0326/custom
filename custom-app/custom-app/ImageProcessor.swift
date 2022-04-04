@@ -22,7 +22,7 @@ class ImageProcessor {
         Imgproc.cvtColor(src: mat, dst: dstMat, code: .COLOR_BGR2GRAY)
         let binarizedMat = Mat()
         // threshは低くするほど
-        Imgproc.threshold(src: dstMat, dst: binarizedMat, thresh: 170, maxval: 255, type: .THRESH_BINARY)
+        Imgproc.threshold(src: dstMat, dst: binarizedMat, thresh: 180, maxval: 255, type: .THRESH_BINARY)
         return binarizedMat.toUIImage()
     }
     
@@ -31,12 +31,20 @@ class ImageProcessor {
      @param image 画像
      @returns 回転後の画像
      */
-    static func rotate(image: UIImage) -> UIImage {
+    static func rotateClockWise(image: UIImage) -> UIImage {
         let mat = Mat(uiImage: image)
         let dstMat = Mat()
         Core.rotate(src: mat, dst: dstMat, rotateCode: .ROTATE_90_CLOCKWISE)
         return dstMat.toUIImage()
     }
+    
+    static func rotateCounterClockWise(image: UIImage) -> UIImage {
+        let src = Mat(uiImage: image)
+        let dstMat = Mat()
+        Core.rotate(src: src, dst: dstMat, rotateCode: .ROTATE_180)
+        return dstMat.toUIImage()
+    }
+
     
     /**
      エッジ検出
@@ -62,9 +70,11 @@ class ImageProcessor {
         let mat = Mat(uiImage: image)
         
         let originMat = Mat(uiImage: origin)
-    
+        do {
+            
+        
         // 輪郭検出
-        let findContoursResult = findContours(from: mat)
+        let findContoursResult = try findContours(from: mat)
         let contours = findContoursResult.contours
         let maxAreaIndex = findContoursResult.maxRectAreaIndex
         
@@ -87,6 +97,9 @@ class ImageProcessor {
         let rect = CGRect(x: minXPoint, y: minYPoint, width: maxXPoint-minXPoint, height: maxYPoint-minYPoint)
         // 切り抜き後の画像を返す
         return UIImage(cgImage: originMat.toCGImage().cropping(to: rect)!)
+        } catch {
+            return image
+        }
     }
     
     struct FindContoursResult {
@@ -102,7 +115,7 @@ class ImageProcessor {
      @param sourceMat 輪郭を検出する画像を表す行列
      @return 輪郭格納する配列、一番広い輪郭のインデックス
      */
-    static func findContours(from sourceMat: Mat) -> FindContoursResult {
+    static func findContours(from sourceMat: Mat) throws -> FindContoursResult {
         let dstMat = Mat()
         // 検出された輪郭を格納する配列
         var contours: [[Point2i]] = [[]]
@@ -114,6 +127,9 @@ class ImageProcessor {
         var maxRectArea: Double = 0
         var maxRectAreaIndex: Int = 0
         var maxApprox: [Point2f] = []
+        guard contours.count > 1 else {
+            throw NSError()
+        }
 
         for i in 1...contours.count - 1 {
             let matOfContour = MatOfPoint(array: contours[i]) as Mat
@@ -140,7 +156,10 @@ class ImageProcessor {
                 }
             }
         }
-    
+        guard maxApprox.count == 4 else {
+            throw NSError()
+        }
+        
         // 座標の位置をソートする
         let sorted = sortRectPoint(from: maxApprox)
         let height = sorted[1].y - sorted[0].y
@@ -159,6 +178,43 @@ class ImageProcessor {
             width: Int32(width),
             height: Int32(height)
         )
+    }
+    
+    /**
+     輪郭を描画
+     @param image 画像
+     */
+    static func drawContours(image: UIImage) -> UIImage{
+        let originMat = Mat(uiImage: image)
+        let binarizedMat = Mat(uiImage: binarize(image: image))
+        do {
+            let result = try findContours(from: binarizedMat)
+            let contours = result.contours
+            let index = result.maxRectAreaIndex
+            guard index != -1 else {
+                return image
+            }
+            // 輪郭に線を引く
+            Imgproc.drawContours(image: originMat, contours: contours, contourIdx: Int32(index), color: Scalar(255,0,0,255))
+            return originMat.toUIImage()
+        } catch {
+            return originMat.toUIImage()
+        }
+    }
+    
+    /**
+     画像をシャープにする
+     @param image 画像
+     @return シャープにした画像
+     */
+    static func sharp(image: UIImage) -> UIImage {
+        let mat = Mat(uiImage: image)
+        let dstMat = Mat()
+        Imgproc.GaussianBlur(src: mat, dst: dstMat, ksize: Size2i(width: 0, height: 0), sigmaX: 3)
+        let alpha = 1.6
+        let outMat = Mat()
+        Core.addWeighted(src1: mat, alpha: alpha, src2: dstMat, beta: 1-alpha, gamma: 0, dst: outMat)
+        return outMat.toUIImage()
     }
     
     /**

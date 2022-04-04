@@ -29,6 +29,7 @@
 		A0E5F66E27D25BCB00B3A43B /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */; };
 		A0E5F67027D320AC00B3A43B /* HabitationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F66F27D320AC00B3A43B /* HabitationTableViewController.swift */; };
 		A0E5F67227D3292D00B3A43B /* NoteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5F67127D3292D00B3A43B /* NoteCollectionViewCell.swift */; };
+		A0E6428B27F8213A0091765F /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E6428A27F8213A0091765F /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		A0E5F66D27D25BCB00B3A43B /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
 		A0E5F66F27D320AC00B3A43B /* HabitationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitationTableViewController.swift; sourceTree = "<group>"; };
 		A0E5F67127D3292D00B3A43B /* NoteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCollectionViewCell.swift; sourceTree = "<group>"; };
+		A0E6428A27F8213A0091765F /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				A0E5F63D27D23E8C00B3A43B /* ViewController.swift */,
 				A0E5F67127D3292D00B3A43B /* NoteCollectionViewCell.swift */,
 				A0E5F63F27D23E8C00B3A43B /* Main.storyboard */,
+				A0E6428A27F8213A0091765F /* CameraViewController.swift */,
 				A0AA0F1327E64A1200EEACDA /* NoteViewController.swift */,
 				A0E5F66F27D320AC00B3A43B /* HabitationTableViewController.swift */,
 				A0E5F64227D23E8E00B3A43B /* Assets.xcassets */,
@@ -331,6 +334,7 @@
 				A0C5329327DB7FA600242428 /* FormViewController.swift in Sources */,
 				A0AA0F1627EA0FE200EEACDA /* Entity.swift in Sources */,
 				A0AA0F1227E5B9C400EEACDA /* EntityConroller.swift in Sources */,
+				A0E6428B27F8213A0091765F /* CameraViewController.swift in Sources */,
 				A0AA0F1027E5B92200EEACDA /* NoteEntityController.swift in Sources */,
 				A0E5F66B27D25A0A00B3A43B /* Model.xcdatamodeld in Sources */,
 			);
